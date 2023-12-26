@@ -1,6 +1,6 @@
 // Define the GPIO SPI connection with LoRa
 #include <SPI.h>
-#include <LoRa.h>                                 
+#include <LoRa.h>                              
 #define SS 5
 #define RST 14
 #define DI0 2
@@ -49,13 +49,17 @@ Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire);
 #define rssiLed 4
 #define dataLed 13
 #define wifiLed 12
+
 // Virtual button pin
 #define VPIN_Button V8
+
 // Physical button pin
 #define buttonPin 17
-//Define integer to remember the toggle state for button
+
+// Define integer to remember the toggle state for button
 bool toggleState = 0;
-// Diplay state mode
+
+// Define integer to remember OLED state mode
 int displayMode = 0;
 
 ButtonConfig config;
@@ -69,19 +73,31 @@ void setup() {
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(rssiLed, OUTPUT);
   pinMode(dataLed, OUTPUT);
+  
   pinMode(wifiLed, OUTPUT);
   digitalWrite(wifiLed, LOW);
+  
+  // Initialize WiFi connection
   startWiFi();
+  
   Blynk.begin(auth, ssid, password);
+  
+  // Initialize LoRa module
   startLora();
+  
+  // Initialize OLED display
   startOled();
+  
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-  //During Starting OLED should have TIME/DATE Mode
+  
+  // During starting OLED should have Time/Date Mode
   displayMode = !toggleState;
   oledMode();
+  
   config.setEventHandler(buttonHandler);
   button.init(buttonPin);
-  //Checking if Blynk.Cloud server is connected every 5 seconds
+  
+  //Check if Blynk.Cloud server is connected every 5 seconds
   timer.setInterval(5000L, checkBlynkStatus);
   Blynk.config(auth);
   delay(500);
@@ -142,8 +158,9 @@ void startOled() {
   display.display();
 }
 
-// Reading data from loRa, sending to the Blynk.Cloud
+// Read data from loRa, send it to the Blynk.Cloud
 void dataLora() {
+  // Variables for LoRa packet
   int pos1, pos2, pos3, pos4, pos5, pos6, pos7;
   int packetSize = LoRa.parsePacket();
   if (packetSize) {
@@ -158,6 +175,7 @@ void dataLora() {
     pos5 = LoRaData.indexOf('$');
     pos6 = LoRaData.indexOf('^');
     pos7 = LoRaData.indexOf('!');
+    
     // Define variables from LoRa.readString()
     device_id = LoRaData.substring(0, pos1);
     temperature = LoRaData.substring(pos1 + 1, pos2);
@@ -167,12 +185,15 @@ void dataLora() {
     dewPoint = LoRaData.substring(pos5 + 1, pos6);
     brightness = LoRaData.substring(pos6 + 1, pos7);
     altitude = LoRaData.substring(pos7 + 1, LoRaData.length());
-    // Flashing Yellow LED when LoRa data receiving
+    
+    // Flash Yellow LED when LoRa data received
     digitalWrite(dataLed, HIGH);
     delay(50);
     digitalWrite(dataLed, LOW);
-    // Getting DATE and TIME from NTP Server
+    
+    // Get Date/Time from NTP Server
     timeServer();
+    
     // Serial print LoRa telemetry
     Serial.println(F("Received TELEMETRY from LoRa:"));
     Serial.print(F("Device ID   | "));
@@ -203,13 +224,14 @@ void dataLora() {
     Serial.println(F(" m"));
     Serial.println();
 
+    // Send data to the Blynk.Cloud
     dataBlynk();
   }
 }
 
-// Getting Time and Date from NTP Server https://www.ntppool.org. Printing in Serial Port
+// Get Time/Date from NTP Server https://www.ntppool.org. Print to the Serial Port
 void timeServer() {
-  // Contains a calendar date and time. Get all the details about date and time and save them on the timeinfo structure.
+  // Get Time/Date from https://www.ntppool.org, save them to the 'timeinfo' structure.
   struct tm timeinfo;
   if (!getLocalTime(&timeinfo)) {
     Serial.println("TIME failed!");
@@ -223,14 +245,14 @@ void timeServer() {
   }
 }
 
-// When App button is pushed - switch the state
+// When the Application Blynk IoT button is pushed - switch the state
 BLYNK_WRITE(VPIN_Button) {
   toggleState = param.asInt();
   displayMode = !toggleState;
   oledMode();
 }
 
-// Checking Blynk.Cloud server connection
+// Check Blynk.Cloud server connection
 void checkBlynkStatus() {
   bool isconnected = Blynk.connected();
   if (isconnected == false) {
@@ -255,7 +277,7 @@ BLYNK_CONNECTED() {
   }
 }
 
-// Sending LoRa data to the Blynk.Cloud
+// Send LoRa data to the Blynk.Cloud
 void dataBlynk() {
   Blynk.virtualWrite(V0, temperature);
   Blynk.virtualWrite(V1, humidity);
@@ -278,7 +300,7 @@ void buttonHandler(AceButton* button, uint8_t eventType, uint8_t buttonState) {
   }
 }
 
-// Displaying OLED data by switch-button
+// Display data on the OLED by switch-button
 void oledMode() {
   switch (displayMode) {
     case 0:
@@ -290,7 +312,7 @@ void oledMode() {
   }
 }
 
-// Telemetry OLED displaying
+// Display telemetry on the OLED
 void dataOled() {
   display.clearDisplay();
   display.setTextColor(WHITE);
@@ -318,15 +340,15 @@ void dataOled() {
   display.print(altitude);
   display.println(" m");
   display.print("RSSI       | ");
-  // RSSI level of LoRa in dB
+  // LoRa RSSI level (dB)
   display.print(LoRa.packetRssi());
   display.println(" dB");
   display.display();
 }
 
-// Time OLED displaying from NTP Server https://www.ntppool.org
+// Display Time/Date on the OLED from NTP Server https://www.ntppool.org
 void timeOled() {
-  // Getting all the details about DATE and TIME, save them on the 'timeinfo' structure from https://www.ntppool.org.
+  // Get Time/Date from https://www.ntppool.org, save them to the 'timeinfo' structure.
   struct tm timeinfo;
   getLocalTime(&timeinfo);
   display.clearDisplay();
@@ -345,7 +367,7 @@ void timeOled() {
   display.display();
 }
 
-// Low RSSI-level indication by the red led
+// Low RSSI-level indication by the Red LED (if less than -120dB)
 void taskCondition() {
   if (LoRa.packetRssi() <= -120) {
     digitalWrite(rssiLed, HIGH);
