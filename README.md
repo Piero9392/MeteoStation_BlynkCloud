@@ -1,11 +1,11 @@
 # The LoRa-based Wireless Weather Station 📡📶
 
-This LoRa-based wireless weather station monitors various environmental parameters, including temperature, humidity, pressure, altitude, dew point, gas and light intensity.
+This LoRa-based wireless weather station monitors various environmental parameters, including temperature🌡️, humidity☔️, pressure⏱️, altitude⛰️, dew point💧, gas💨 and light intensity💡.
 
 
-The weather station comprises two LoRa devices: Sender and Receiver.
+The weather station comprises two LoRa-based devices: Sender and Receiver.
 
-The Sender measures environmental parameters using BME680 (temperature🌡️, humidity☔️, pressure⏱️, altitude⛰️, dew point💧, gas💨 sensor), BH1750 (light sensor💡) and transmits this data over the LoRa protocol to the Receiver. You can place the Sender remotely, even a few kilometers away from the Receiver.
+The Sender measures environmental parameters using BME680 sensor, BH1750 sensor and transmits this data over the LoRa protocol to the Receiver. You can place the Sender remotely, even a few kilometers away from the Receiver. 
 
 
 The data obtained by Receiver can be viewed in multiple ways:
@@ -103,3 +103,6 @@ The Arduino code for this project is written in C++. It uses the built-in librar
 * 🟢 Green LED:
     * Cathode: connect to GPIO12 through resistor 220 Ohm
     * Anode: connect to GND
+ 
+
+Note ⚠️ According to the datasheets of the LoRa module and BME680 sensor, they operate with an interface voltage range of 3.3V. Therefore, if you are using the Arduino Pro Mini 5V version or another microcontroller with a 5V interface voltage, use an additional Logic Level Converter from 5V to 3.3V to prevent potential failures in the LoRa module and BME680 sensor.
