@@ -109,4 +109,4 @@ The Arduino code for this project is written in C++. It uses the built-in librar
     * Anode: connect to GND
  
 
-Note ⚠️ According to the datasheets of the LoRa module and BME680 sensor, they operate with an interface voltage range of 3.3V. Therefore, if you are using the Arduino Pro Mini 5V version or another microcontroller with a 5V interface voltage, use an additional Logic Level Converter from 5V to 3.3V to prevent potential failures in the LoRa module and BME680 sensor.
+Note ⚠️ According to the datasheet of the LoRa module, it operates with an interface voltage range of 3.3V. Therefore, if you are using the Arduino Pro Mini 5V version or another microcontroller with a 5V interface voltage, use an additional Logic Level Converter from 5V to 3.3V to prevent potential failures in the LoRa module.
