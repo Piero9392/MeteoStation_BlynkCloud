@@ -2,17 +2,21 @@
 
 This LoRa-based wireless weather station monitors various environmental parameters, including temperature🌡️, humidity☔️, pressure⏱️, altitude⛰️, dew point💧, gas💨 and light intensity💡.
 
-
 The weather station comprises two LoRa-based devices: Sender and Receiver.
 
-The Sender measures environmental parameters using BME680 sensor, BH1750 sensor and transmits this data over the LoRa protocol to the Receiver. You can place the Sender remotely, even a few kilometers away from the Receiver. 
+![Sender & Receiver](https://drive.google.com/uc?id=1B5QVXjY1bDgZAN-1zI0oz4fyuuecww6Z)
 
+The Sender measures environmental parameters using BME680 sensor, BH1750 sensor and transmits this data over the LoRa protocol to the Receiver. You can place the Sender remotely, even a few kilometers away from the Receiver. 
 
 The data obtained by Receiver can be viewed in multiple ways:
 * Display data on the Receiver’s OLED display 🖥️
 * Send data by RECEIVER to Blynk.Cloud server over WiFi 🌐, enabling you to remotely monitor 🔍 all data in real-time using the 'Blynk IoT' application📱for iOS or Android
 
+![Blynk IoT App for IOS](https://drive.google.com/uc?id=1jmJ4TtliXbxuNV6EkCuoLKRZ9IQxh8xC)
+
 Additionally, you can retrieve the value of any parameter 📈 for the last period: hour, day, week, month, etc. The Receiver also retrieves Time 🕖 and Date 📅 from the NTP Server at [https://www.ntppool.org](https://www.ntppool.org). You can choose what to display on the OLED (received Telemetry or Time/Date from the server) by switching the button 🖲 on the Receiver itself or the virtual button 🔘 in the “Blynk IoT” application 📲 for iOS or Android.
+
+![Time from server](https://drive.google.com/uc?id=1LMTyj5skjA5Q-GdyCOqMhUcXkex-do1b)
 
 The Receiver includes three LEDs🚦:
 * 🔴 Red LED used as an indicator of low RSSI level (less than -120dB) from Sender
