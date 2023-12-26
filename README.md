@@ -49,7 +49,7 @@ The Arduino code for this project is written in C++. It uses the built-in librar
 ### Sender (Arduino Pro Mini 3.3V):
 
 * 📡 LoRa module Ra-02 SX1278 :
-    * 3.3V: connect to 3.3V
+    * VCC: connect to 3.3V
     * GND: connect to GND
     * RST: connect to D6
     * D100: connect to D2
@@ -77,7 +77,7 @@ The Arduino code for this project is written in C++. It uses the built-in librar
 ### Receiver (ESP32):
 
 * 📡 LoRa module Ra-02 SX1278:
-    * 3.3V: connect to 3.3V
+    * VCC: connect to 3.3V
     * GND: connect to GND
     * RST: connect to GPIO14
     * D100: connect to GPIO2
