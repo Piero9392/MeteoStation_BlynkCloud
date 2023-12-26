@@ -1,4 +1,4 @@
-# The LoRa-based Wireless Weather Station 📡📶
+# The LoRa-based Wireless Meteo Station 📡📶
 
 This LoRa-based wireless weather station monitors various environmental parameters, including temperature🌡️, humidity☔️, pressure⏱️, altitude⛰️, dew point💧, gas💨 and light intensity💡.
 
