@@ -14,7 +14,7 @@ The data obtained by Receiver can be viewed in multiple ways:
 
 Additionally, you can retrieve the value of any parameter 📈 for the last period: hour, day, week, month, etc. The Receiver also retrieves Time 🕖 and Date 📅 from the NTP Server at [https://www.ntppool.org](https://www.ntppool.org). You can choose what to display on the OLED (received Telemetry or Time/Date from the server) by switching the button 🖲 on the Receiver itself or the virtual button 🔘 in the “Blynk IoT” application 📲 for iOS or Android.
 
-The RECEIVER includes three LEDs🚦:
+The Receiver includes three LEDs🚦:
 * 🔴 Red LED used as an indicator of low RSSI level (less than -120dB) from Sender
 * 🟡 Yellow LED used as an indicator of data receipt from Sender
 * 🟢 Green LED used as an indicator of successful Blynk.Cloud server connection
