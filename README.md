@@ -29,12 +29,12 @@ The Receiver includes three LEDs🚦:
 * 🛠 Arduino Pro Mini 3.3V microcontroller
 * 🗼 BME680 sensor
 * 🗼 BH1750 sensor
-* 📡 LoRa module Ra-02 SX1278
+* 📡 LoRa module Ra-02 SX1278 433MHz
 * 🔌 AMS1117CD-3.3V power supply voltage regulator
 
 ### Receiver 🖥️:
 * 🛠 ESP32 microcontroller 
-* 📡 LoRa module Ra-02 SX1278
+* 📡 LoRa module Ra-02 SX1278 433MHz
 * 🖥️ SSD1306 OLED display
 * 🖲 Push button
 * 🚦 3 x LED
