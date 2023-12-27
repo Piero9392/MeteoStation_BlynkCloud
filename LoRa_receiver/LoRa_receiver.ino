@@ -219,7 +219,7 @@ void startWiFi() {
   if (WiFi.status() == WL_CONNECTED) {
     Serial.println();
     Serial.println("WiFi connected");
-    Serial.print("Got IP: ");
+    Serial.print("IP: ");
     Serial.println(WiFi.localIP());
     Serial.println();
   }
