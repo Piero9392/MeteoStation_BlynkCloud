@@ -42,7 +42,15 @@ The Receiver includes three LEDs🚦:
 
 ## Software
 
-The Arduino code for this project is written in C++. It uses the built-in libraries.
+The Arduino code for this project is written in C++.
+
+It uses the built-in libraries:
+* SPI: LoRa communication.
+* Adafruit_GFX, Adafruit_SSD1306: OLED display.
+* WiFi, WiFiClient: ESP32 Wi-Fi connection.
+* time: NTP server for time synchronization.
+* AceButton: Library for handling physical button events.
+* BlynkSimpleEsp32: Blynk integration for ESP32.
 
 ## Wiring
 
