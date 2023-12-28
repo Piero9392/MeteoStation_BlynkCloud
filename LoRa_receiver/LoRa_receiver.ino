@@ -481,7 +481,7 @@ void timeOled() {
   display.setCursor(0, 45);
   display.println(&timeinfo, "%A");
 
-  // Set cursor position for the day, month, and year. We (0, 57) coordinates for more convenient reading text on the OLED screen.
+  // Set cursor position for the day, month, and year. We use (0, 57) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(0, 57);
   display.println(&timeinfo, "%d %B %Y");
 
