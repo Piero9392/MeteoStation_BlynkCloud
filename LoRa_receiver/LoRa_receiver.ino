@@ -56,8 +56,8 @@ char auth[] = "p_rzoVEw6nYdmsumm99w3a3pVG8CRe_t";
 bool fetch_blynk_state = true;
 
 /* Time NTP Server.
-gmtOffset_sec - the offset in seconds between your time zone and GMT.
-daylightOffset_sec - the offset in seconds for your daylight saving time. */
+gmtOffset_sec - the offset in seconds between your time zone and GMT. For Ukraine it is 2 hours or 7200 seconds.
+daylightOffset_sec - the offset in seconds for your daylight saving time. For Ukraine it is 1 hour or 3600 seconds. */
 const char* ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 7200;
 const int daylightOffset_sec = 3600;
@@ -78,7 +78,7 @@ String dewPoint;
 String brightness;
 String altitude;
 
-// Set OLED definition.
+// Set OLED definition 128x64 pixels according to the SSD1306 hardware specs.
 Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire);
 
 // BlynkTimer is a timer utility provided by the Blynk library for scheduling tasks and periodic operations.
@@ -94,7 +94,7 @@ void handleEvent(AceButton*, uint8_t, uint8_t);
 
 // Setup function - runs once when the microcontroller starts or is reset.
 void setup() {
-  // Initialize serial communication with a baud rate of 115200.
+  // Initialize ESP32 serial communication with a baud rate of 115200.
   Serial.begin(115200);
 
   // Set the mode for the physical button pin to INPUT_PULLUP. INPUT_PULLUP configures the pin as an input with an internal pull-up resistor.
@@ -123,7 +123,7 @@ void setup() {
   // Configure Blynk with the provided authentication token.
   Blynk.config(auth);
 
-  // Check if Blynk.Cloud server is connected every 5000 milliseconds.
+  // We receive LoRa telemetry every 5000 miliseconds, therefore, we need to check if the Blynk.Cloud server is connected every 5000 milliseconds to make sure that the data has been overwritten properly.
   timer.setInterval(5000L, checkBlynkStatus);
   
   // Configuration for your GMT time zone and daylight saving time (NTP Server).
@@ -207,7 +207,7 @@ void startWiFi() {
     // Increment the attempts counter.
     attempts++;
 
-    // Limit the number of attempts to connect to WiFi.
+    // Limit the number of attempts to connect to WiFi. 50 attempts it is enough for succesfull connection.
     if (attempts > 50) {
       // If the maximum attempts are reached, print a failure message to the Serial monitor, to the OLED screen and exit the loop.
       wifiFailure();
@@ -245,43 +245,43 @@ void wifiFailure() {
   // Set text size to 1.
   display.setTextSize(1);
   
-  // Set the starting cursor position on the OLED screen.
+  // Set the starting cursor position on the OLED screen. We use (30, 0) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(30, 0);
   
   // Display "WiFi failed! on the OLED screen.
   display.print("WiFi failed!");
 
-  // Set the starting cursor position on the OLED screen.
+  // Set the starting cursor position on the OLED screen. We use (15, 10) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(15, 10);
   
   // Display "Check the network" on the OLED screen.
   display.print("Check the network");
   
-  // Set the starting cursor position on the OLED screen.
+  // Set the starting cursor position on the OLED screen. We use (0, 18) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(0, 18);
 
   // Display "---------------------" on the OLED screen.
   display.print("---------------------");
 
-    // Set the starting cursor position on the OLED screen.
+  // Set the starting cursor position on the OLED screen. We use (0, 27) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(0, 27);
 
   // Display "WiFi" on the OLED screen.
   display.print("WiFi");
   
-  // Set the starting cursor position on the OLED screen.
+  // Set the starting cursor position on the OLED screen. We use (0, 37) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(0, 37);
 
   // Display WiFi network name (ssid) on the OLED screen.
   display.print(ssid);
 
-  // Set the starting cursor position on the OLED screen.
+  // Set the starting cursor position on the OLED screen. We use (0, 47) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(0, 47);
 
   // Display "Password" on the OLED screen.
   display.print("Password");
 
-   // Set the starting cursor position on the OLED screen.
+  // Set the starting cursor position on the OLED screen. We use (0, 57) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(0, 57);
 
   // Display WiFi network password on the OLED screen.
@@ -293,7 +293,7 @@ void wifiFailure() {
 
 // Function to initialize the OLED SSD1306 display.
 void startOled() {
-  // Begin communication with the OLED display using the SSD1306_SWITCHCAPVCC mode and I2C address 0x3C.
+  // Begin communication with the OLED display using the SSD1306_SWITCHCAPVCC mode and I2C address 0x3C (by default).
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
   // Clear the OLED display buffer.
@@ -467,28 +467,28 @@ void timeOled() {
   // Set text color to white.
   display.setTextColor(WHITE);
 
-  // Draw a rounded rectangle for visual aesthetics.
+  // Draw a rounded rectangle for visual aesthetics. Function display.drawRoundRect(9, 13, 111, 26, 5, WHITE) is drawing a rounded rectangle on the display starting at coordinates (9, 13) with a width of 111 pixels, a height of 26 pixels, rounded corners with a radius of 5 pixels, and the rectangle is filled with the color white.
   display.drawRoundRect(9, 13, 111, 26, 5, WHITE);
 
   // Set text size to 1.
   display.setTextSize(1);
 
-  // Set cursor position for the city name.
+  // Set cursor position for the city name. We use (54, 0) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(54, 0);
   display.print("KYIV ");
 
-  // Set cursor position for the day of the week.
+  // Set cursor position for the day of the week. We use (0, 45) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(0, 45);
   display.println(&timeinfo, "%A");
 
-  // Set cursor position for the day, month, and year.
+  // Set cursor position for the day, month, and year. We (0, 57) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(0, 57);
   display.println(&timeinfo, "%d %B %Y");
 
   // Set text size to 2 for the time.
   display.setTextSize(2);
 
-  // Set cursor position for the time.
+  // Set cursor position for the time. We (18, 19) coordinates for more convenient reading text on the OLED screen.
   display.setCursor(18, 19);
   display.println(&timeinfo, "%H:%M:%S");
 
@@ -642,7 +642,8 @@ void buttonHandler(AceButton* button, uint8_t eventType, uint8_t buttonState) {
   }
 }
 
-// Function to check the condition of the LoRa signal strength and control the red LED indicator accordinaly of signal (if signal is less than -120dB flash the red Led).
+/* Function to check the condition of the LoRa signal strength and control the red LED indicator accordinaly of signal.
+If the signal value is less than -120 db, there is a probability of losing a stable connection with the Sender. */
 void taskCondition() {
   // Check if the received signal strength indicator (RSSI) is below or equal to -120 dB.
   if (LoRa.packetRssi() <= -120) {
