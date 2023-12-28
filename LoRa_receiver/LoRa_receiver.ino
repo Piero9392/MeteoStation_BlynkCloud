@@ -467,7 +467,8 @@ void timeOled() {
   // Set text color to white.
   display.setTextColor(WHITE);
 
-  // Draw a rounded rectangle for visual aesthetics. This function is drawing a rounded rectangle on the display starting at coordinates (9, 13) with a width of 111 pixels, a height of 26 pixels, rounded corners with a radius of 5 pixels, and the rectangle is filled with the color white.
+  /* Draw a rounded rectangle for visual aesthetics.
+  This function is drawing a rounded rectangle on the display starting at coordinates (9, 13) with a width of 111 pixels, a height of 26 pixels, rounded corners with a radius of 5 pixels, and the rectangle is filled with the color white. */
   display.drawRoundRect(9, 13, 111, 26, 5, WHITE);
 
   // Set text size to 1.
